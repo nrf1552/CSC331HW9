@@ -61,4 +61,8 @@ public class TopPanel extends JPanel {
 		g2.setPaint(new Color(255,215,0)); //UNCW Yellow inner color
 		g2.drawString(textToOutline, x, y);
 	}
+	
+	private void startGame(){
+		
+	}
 }

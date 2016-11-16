@@ -14,6 +14,12 @@ import javax.swing.*;
 
 public class Viewer {
 
+	public String resultsFilePath;
+	public String highScoreTime;
+	public String highScoreUser;
+	
+	int level;
+	
 	public Integer selectedNumber;
 	public Integer selectedNumberOfPanels;
 	public Boolean isAddSubtract;
@@ -132,5 +138,17 @@ public class Viewer {
 		}
 		
 		return new Dimension(image.getWidth(), image.getHeight());
+	}
+	
+	public void increaseGameLevel()	{
+		
+	}
+	
+	public void writeRunDataToFile(){
+		
+	}
+	
+	public void readRunDataFromFile(){
+		
 	}
 }
