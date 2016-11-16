@@ -1,14 +1,8 @@
 package HW9;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
 
 public class ImageComponent extends JPanel {
 
@@ -19,7 +13,7 @@ public class ImageComponent extends JPanel {
 	static final String IMAGE = "ImagePanel";
 
 	public BufferedImage finalImage;
-	public Viewer viewer;
+	public Main viewer;
 
 	int width;
 	int height;
@@ -29,7 +23,8 @@ public class ImageComponent extends JPanel {
 	MathPanel mathPanel;
 	ImagePanel imagePanel;
 	
-	public ImageComponent(BufferedImage image, Viewer v) {
+	
+	public ImageComponent(BufferedImage image, Main v) {
 		setLayout(new CardLayout());
 		cardLayout = (CardLayout)getLayout();
 		

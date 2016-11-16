@@ -12,13 +12,12 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Viewer {
+public class Main {
 
 	public String resultsFilePath;
 	public String highScoreTime;
 	public String highScoreUser;
 	
-	int level;
 	
 	public Integer selectedNumber;
 	public Integer selectedNumberOfPanels;
@@ -33,9 +32,9 @@ public class Viewer {
 	private int losses;
 	private JPanel resultPanel;
 
-	public Viewer() {
+	public Main() {
 		// Instantiate JFrame
-		frame = new JFrame("Homework 6");
+		frame = new JFrame("Homework 9");
 
 		// Set initial properties
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +45,7 @@ public class Viewer {
 		frame.add(resultPanel, BorderLayout.PAGE_START);
 
 		// Add menu
-		frame.setJMenuBar(new ViewerMenu().menu(this));
+		frame.setJMenuBar(new ViewerMenu(this).get());
 		
 		// Add container for all image components
 		panelContainer = new JPanel();
@@ -59,7 +58,6 @@ public class Viewer {
 
 		// Show image components
 		displayImageComponents();
-		
 	}
 
 	public void displayImageComponents() {
@@ -108,8 +106,20 @@ public class Viewer {
 		}
 	}
 
+	public void increaseGameLevel()	{
+		
+	}
+	
+	public void writeRunDataToFile(){
+		
+	}
+	
+	public void readRunDataFromFile(){
+		
+	}
+	
 	public static void main(String[] args) {
-		new Viewer();
+		new Main();
 	}
 
 	// Method to get average time for each problem correctly answered
@@ -138,17 +148,5 @@ public class Viewer {
 		}
 		
 		return new Dimension(image.getWidth(), image.getHeight());
-	}
-	
-	public void increaseGameLevel()	{
-		
-	}
-	
-	public void writeRunDataToFile(){
-		
-	}
-	
-	public void readRunDataFromFile(){
-		
 	}
 }

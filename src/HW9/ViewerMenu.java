@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-public class ViewerMenu {
+public class ViewerMenu extends JMenuBar{
 
+	static final long serialVersionUID = 1L;
 	JTextArea output;
 	JScrollPane scrollPane;
+	Main viewer;
+	
 
 	String[] images = { "Spring.jpg", "Summer.jpg", "Fall.jpg", "Winter.jpg" };
 
@@ -17,8 +20,14 @@ public class ViewerMenu {
 
 	int acceleratorKeyCodeTracker = KeyEvent.VK_1;
 	int mnemonicKeyCode = KeyEvent.VK_1;
+	
+	
 
-	public JMenuBar menu(Viewer viewer) {
+	public ViewerMenu(Main viewer){
+		this.viewer = viewer;
+	}
+	
+	public JMenuBar get() {
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenu submenu;

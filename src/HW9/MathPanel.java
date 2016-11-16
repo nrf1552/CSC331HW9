@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,18 +31,16 @@ public class MathPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int attempts = 0; // variable that controls the amount of attempts
 								// to answer the math problem
-	private int mathAnswer; // variable that holds the answer to the math
-							// problem
-
-	private String mathProblem; // variable that holds the string representation
-								// of the math problem
-	private JTextField fieldAnswer; // variable that holds whatever the user
-									// enters in the TextField
-	private long solveTime;     //These 3 variables are used to calculate the time 
-	private long startTime;     //to solve each math problem
+	private int mathAnswer;
+	private String mathProblem; 
+	private JTextField fieldAnswer; 
+	private int userNumber;
+	private int randomNum;
+	
+	private long solveTime;     
+	private long startTime;
 	private long current;
 
-	private MathEngine math;    //math variable for each instance of MathEngine
 	private ImageComponent imageComponent;
 	
 	JLabel problemLabel;
@@ -52,9 +51,7 @@ public class MathPanel extends JPanel {
 	//Constructor
 	public MathPanel(ImageComponent ic) {
 		imageComponent = ic;
-		math = new MathEngine(ic.viewer.selectedNumber, ic.viewer.isAddSubtract);
-		mathProblem = math.getProblem();
-		mathAnswer = math.getAnswer();
+		initMathProblem(ic.viewer.selectedNumber, ic.viewer.isAddSubtract);
 	}
 
 	//Method to create a JPanel for each split image
@@ -112,7 +109,7 @@ public class MathPanel extends JPanel {
 		return this;
 	}
 
-	public long getElapsedTime() {
+	private long getElapsedTime() {
 		return solveTime;
 	}
 
@@ -124,7 +121,7 @@ public class MathPanel extends JPanel {
 
 		// If user's answer is correct, record the time, store it in
 		// the solveTime variable, and show the image underneath
-		if (math.isCorrect(fieldAnswer.getText())) {
+		if (Integer.parseInt(fieldAnswer.getText())==mathAnswer) {
 			current = System.nanoTime();
 			solveTime = current - startTime;
 
@@ -139,6 +136,34 @@ public class MathPanel extends JPanel {
 				textfieldLabel.setText("Correct answer:");
 				enterButton.setEnabled(false);
 				imageComponent.viewer.recordLoss();
+			}
+		}
+	}
+	
+	private void initMathProblem(int userInput, boolean isAddSubtract){
+		userNumber = userInput;
+		randomNum = new Random().nextInt(12);
+		
+		boolean toggle = new Random().nextBoolean();
+		
+		if (isAddSubtract) {
+			if (toggle) {
+				mathProblem = userNumber + " + " + randomNum;
+				mathAnswer = userNumber + randomNum;
+			}
+			else {
+				mathProblem = userNumber + " - " + randomNum;
+				mathAnswer = userNumber - randomNum;
+			}			
+		}
+		else {
+			if (toggle) {
+				mathProblem = userNumber + " * " + randomNum;
+				mathAnswer = userNumber * randomNum;
+			}
+			else {
+				mathProblem = userNumber + " / " + randomNum;
+				mathAnswer = userNumber / randomNum;
 			}
 		}
 	}
