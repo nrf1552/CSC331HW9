@@ -39,7 +39,7 @@ public class ImageComponent extends JPanel {
 		imagePanel = new ImagePanel(this);
 		
 		add(topPanel, TOP);
-		add(mathPanel.showPanel(), MATH);
+		add(mathPanel, MATH);
 		add(imagePanel, IMAGE);
 	}
 
@@ -49,6 +49,7 @@ public class ImageComponent extends JPanel {
 
 	public void showMathLayer() {
 		cardLayout.show(this, MATH);
+		mathPanel.setFocusInTextField();
 	}
 
 	public void showImageLayer() {
@@ -56,10 +57,10 @@ public class ImageComponent extends JPanel {
 	}
 	
 	public void playCorrectSound(){
-		
+		viewer.sounds.playCorrectSound();
 	}
 	
 	public void playIncorrectSound(){
-		
+		viewer.sounds.playIncorrectSound();
 	}
 }

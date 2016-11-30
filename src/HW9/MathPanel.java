@@ -1,6 +1,9 @@
 package HW9;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -52,23 +55,23 @@ public class MathPanel extends JPanel {
 	public MathPanel(ImageComponent ic) {
 		imageComponent = ic;
 		initMathProblem(ic.viewer.selectedNumber, ic.viewer.isAddSubtract);
-	}
-
-	//Method to create a JPanel for each split image
-	public JPanel showPanel() {
-
+		
 		this.setLayout(new GridLayout(4, 1));
 
 		// Creates a JLabel that shows the math problem
 		problemLabel = new JLabel(mathProblem, SwingConstants.CENTER);
 		problemLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 48));
+		problemLabel.setFocusable(false);
 		this.add(problemLabel);
 
 		// Creates a JTextField for user input
 		entryPanel = new JPanel();
 		entryPanel.setLayout(new GridLayout(1, 2));
+		entryPanel.setFocusable(false);
 
 		textfieldLabel = new JLabel("Enter answer: ", SwingConstants.RIGHT);
+		textfieldLabel.setFocusable(false);
+		
 		fieldAnswer = new JTextField();
 		fieldAnswer.setPreferredSize(new Dimension(200, 20));
 		
@@ -89,6 +92,7 @@ public class MathPanel extends JPanel {
 				}
 			}
 		});
+		
 		textfieldLabel.setLabelFor(fieldAnswer);
 		entryPanel.add(textfieldLabel);
 		entryPanel.add(fieldAnswer);
@@ -105,7 +109,68 @@ public class MathPanel extends JPanel {
 		});
 		this.add(enterButton);
 		startTime = System.nanoTime();
+	}
+	
+	public void setFocusInTextField(){
+		fieldAnswer.requestFocus();
+	}
 
+	//Method to create a JPanel for each split image
+	public JPanel showPanel() {
+		this.setLayout(new GridLayout(4, 1));
+
+		// Creates a JLabel that shows the math problem
+		problemLabel = new JLabel(mathProblem, SwingConstants.CENTER);
+		problemLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 48));
+		problemLabel.setFocusable(false);
+		this.add(problemLabel);
+
+		// Creates a JTextField for user input
+		entryPanel = new JPanel();
+		entryPanel.setLayout(new GridLayout(1, 2));
+		entryPanel.setFocusable(false);
+
+		textfieldLabel = new JLabel("Enter answer: ", SwingConstants.RIGHT);
+		textfieldLabel.setFocusable(false);
+		
+		fieldAnswer = new JTextField();
+		fieldAnswer.setPreferredSize(new Dimension(200, 20));
+		
+		//Creates a KeyListener for the user to press enter to submit their answer
+		fieldAnswer.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					validateAnswer();
+				}
+			}
+		});
+		
+		textfieldLabel.setLabelFor(fieldAnswer);
+		entryPanel.add(textfieldLabel);
+		entryPanel.add(fieldAnswer);
+		this.add(entryPanel);
+
+		// Creates a JButton for the user to submit their answer to the math
+		// problem
+		enterButton = new JButton("Enter");
+		enterButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				validateAnswer();
+			}
+		});
+		this.add(enterButton);
+		startTime = System.nanoTime();
+		
 		return this;
 	}
 
@@ -127,10 +192,10 @@ public class MathPanel extends JPanel {
 
 			imageComponent.showImageLayer();
 			imageComponent.viewer.recordWin(getElapsedTime());
-			imageComponent.viewer.sounds.playCorrectSound();
+			imageComponent.playCorrectSound();
 			// Once the attempts variable is equal to 2, show the correct answer
 		} else {
-			imageComponent.viewer.sounds.playIncorrectSound();
+			imageComponent.playIncorrectSound();
 			if (attempts == 2) {
 				fieldAnswer.setText(Integer.toString(mathAnswer));
 				fieldAnswer.setEditable(false);

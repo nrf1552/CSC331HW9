@@ -5,7 +5,6 @@ import javax.sound.sampled.*;
 
 public class Sound {
 	boolean playing = false;
-	
 	Clip cheerClip;
 	Clip booClip;
 

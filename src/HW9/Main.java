@@ -133,7 +133,6 @@ public class Main {
 		new Main();
 	}
 
-	// Method to get average time for each problem correctly answered
 	private long getAverageElapsedTime() {
 		long total = 0;
 
