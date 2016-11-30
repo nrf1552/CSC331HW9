@@ -41,10 +41,10 @@ public class TopPanel extends JPanel {
 
 	// paints the grey top panel
 	public void paintComponent(Graphics g) {
-		String text = "Click to show problem";
+		String text = "Click anywhere to begin";
 		
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(new Color(0,112,115)); //UNCW Yellow
+		g2.setColor(new Color(0,112,115)); //UNCW teal
 		g2.fillRect(0, 0, imageComponent.width, imageComponent.height);
 		g2.setPaint(new Color(255,215,0)); //yellow
 		g2.setFont(new Font("Sans-serif", Font.BOLD, 20));

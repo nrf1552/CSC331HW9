@@ -1,10 +1,8 @@
 package HW9;
 
 import java.io.*;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class ResultHandler {
@@ -130,8 +128,11 @@ public class ResultHandler {
 		Collections.sort(allResults);
 	}
 
+	public void saveResult(String name,int numberOfProblems, int numberFamily,boolean isAddSubtract, long averageTime){
+		
+	}
 	// data object
-	public class Result implements Comparable<Result> {
+	private class Result implements Comparable<Result> {
 		public String name;
 		public int numberOfProblems, numberFamily;
 		public boolean isAddSubtract;

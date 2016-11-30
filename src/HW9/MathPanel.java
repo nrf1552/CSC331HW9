@@ -1,9 +1,6 @@
 package HW9;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FocusTraversalPolicy;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,12 +17,11 @@ import javax.swing.SwingConstants;
 
 /**
  * 
- * @author Daniel Emery 
- * This class shows a panel of each instance of MathEngine.
- * These panels cover the bottom layer, which is the actual picture. The
- * panel includes the randomized math problem, a textbox for the user to
- * enter his/her answer, and an enter button for the user to submit the
- * answer.
+ * @author Daniel Emery This class shows a panel of each instance of MathEngine.
+ *         These panels cover the bottom layer, which is the actual picture. The
+ *         panel includes the randomized math problem, a textbox for the user to
+ *         enter his/her answer, and an enter button for the user to submit the
+ *         answer.
  *
  */
 
@@ -35,27 +31,27 @@ public class MathPanel extends JPanel {
 	private int attempts = 0; // variable that controls the amount of attempts
 								// to answer the math problem
 	private int mathAnswer;
-	private String mathProblem; 
-	private JTextField fieldAnswer; 
+	private String mathProblem;
+	private JTextField fieldAnswer;
 	private int userNumber;
 	private int randomNum;
-	
-	private long solveTime;     
+
+	private long solveTime;
 	private long startTime;
 	private long stopTime;
 
 	private ImageComponent imageComponent;
-	
+
 	JLabel problemLabel;
 	JPanel entryPanel;
 	JLabel textfieldLabel;
 	JButton enterButton;
 
-	//Constructor
+	// Constructor
 	public MathPanel(ImageComponent ic) {
 		imageComponent = ic;
 		initMathProblem(ic.viewer.selectedNumber, ic.viewer.isAddSubtract);
-		
+
 		this.setLayout(new GridLayout(4, 1));
 
 		// Creates a JLabel that shows the math problem
@@ -71,28 +67,36 @@ public class MathPanel extends JPanel {
 
 		textfieldLabel = new JLabel("Enter answer: ", SwingConstants.RIGHT);
 		textfieldLabel.setFocusable(false);
-		
+
 		fieldAnswer = new JTextField();
 		fieldAnswer.setPreferredSize(new Dimension(200, 20));
-		
-		//Creates a KeyListener for the user to press enter to submit their answer
+
+		// Creates a KeyListener for the user to press enter to submit their
+		// answer
 		fieldAnswer.addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {				
+			public void keyTyped(KeyEvent e) {
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				// for demo purposes, populates the correct answer
+				if (e.getKeyCode() == KeyEvent.VK_DEAD_TILDE) {
+					fieldAnswer.setText(Integer.toString(mathAnswer));
 					validateAnswer();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!fieldAnswer.getText().isEmpty()) {
+						validateAnswer();
+					}
 				}
 			}
 		});
-		
+
 		textfieldLabel.setLabelFor(fieldAnswer);
 		entryPanel.add(textfieldLabel);
 		entryPanel.add(fieldAnswer);
@@ -107,14 +111,15 @@ public class MathPanel extends JPanel {
 				validateAnswer();
 			}
 		});
+
 		this.add(enterButton);
 	}
-	
-	public void startTimer(){
+
+	public void startTimer() {
 		startTime = System.nanoTime();
 	}
-	
-	public void setFocusInTextField(){
+
+	public void setFocusInTextField() {
 		fieldAnswer.requestFocus();
 	}
 
@@ -130,7 +135,7 @@ public class MathPanel extends JPanel {
 
 		// If user's answer is correct, record the time, store it in
 		// the solveTime variable, and show the image underneath
-		if (Integer.parseInt(fieldAnswer.getText())==mathAnswer) {
+		if (Integer.parseInt(fieldAnswer.getText()) == mathAnswer) {
 			stopTime = System.nanoTime();
 			imageComponent.playCorrectSound();
 
@@ -148,29 +153,26 @@ public class MathPanel extends JPanel {
 			}
 		}
 	}
-	
-	private void initMathProblem(int userInput, boolean isAddSubtract){
+
+	private void initMathProblem(int userInput, boolean isAddSubtract) {
 		userNumber = userInput;
 		randomNum = new Random().nextInt(12);
-		
+
 		boolean toggle = new Random().nextBoolean();
-		
+
 		if (isAddSubtract) {
 			if (toggle) {
 				mathProblem = userNumber + " + " + randomNum;
 				mathAnswer = userNumber + randomNum;
-			}
-			else {
+			} else {
 				mathProblem = userNumber + " - " + randomNum;
 				mathAnswer = userNumber - randomNum;
-			}			
-		}
-		else {
+			}
+		} else {
 			if (toggle) {
 				mathProblem = userNumber + " * " + randomNum;
 				mathAnswer = userNumber * randomNum;
-			}
-			else {
+			} else {
 				mathProblem = userNumber + " / " + randomNum;
 				mathAnswer = userNumber / randomNum;
 			}

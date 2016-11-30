@@ -1,11 +1,8 @@
 package HW9;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -13,8 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
-import HW9.ResultHandler.Result;
 
 public class StartPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +32,7 @@ public class StartPanel extends JPanel {
 
 		add(userPanel());
 		add(optionsPanel());
-		add(playPanel());		
+		add(playPanel());	
 	}
 
 	private JPanel userPanel() {
@@ -170,7 +165,7 @@ public class StartPanel extends JPanel {
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				main.displayImageComponents();
+				main.startGame();
 			}
 		});
 		
