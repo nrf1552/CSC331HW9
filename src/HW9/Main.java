@@ -7,18 +7,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.sound.sampled.*;
 
 public class Main {
 
 	public String resultsFilePath;
 	public String highScoreTime;
 	public String highScoreUser;
-	
-	
+		
 	public Integer selectedNumber;
 	public Integer selectedNumberOfPanels;
 	public Boolean isAddSubtract;
@@ -31,8 +33,29 @@ public class Main {
 	private int wins;
 	private int losses;
 	private JPanel resultPanel;
+	
+	//AudioClip cheerSound;
+	//AudioClip booSound;
 
 	public Main() {
+		URL cheerUrl = null;
+		URL booUrl = null;
+		try {
+			cheerUrl = new URL("http://www.wavsource.com/snds_2016-11-20_5768273412148964/tv/simpsons/bart/big_deal.wav");
+			booUrl = new URL("file://boo.wav");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//cheerSound = Applet.newAudioClip(cheerUrl);
+		//booSound = Applet.newAudioClip(booUrl);
+		
+		//cheerSound.play();
+		
+		
+		
+		
+		
 		// Instantiate JFrame
 		frame = new JFrame("Homework 9");
 
