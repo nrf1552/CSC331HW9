@@ -11,9 +11,12 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
+import HW9.ResultHandler.Result;
+
 public class Main {
 	public ResultHandler resultHandler;
 	public Sound sounds;
+	public ImageSplitter imageSplitter;
 
 	// game data
 	public String[] images = { "Spring.jpg", "Summer.jpg", "Fall.jpg", "Winter.jpg" };
@@ -41,6 +44,7 @@ public class Main {
 		// Initialize variables
 		sounds = new Sound();
 		resultHandler = new ResultHandler();
+		imageSplitter = new ImageSplitter();
 
 		// Set defaults
 		selectedNumber = 6;
@@ -79,9 +83,12 @@ public class Main {
 		panelContainer.removeAll();
 		panelContainer.setPreferredSize(new Dimension(1200, 800));
 		panelContainer.setLayout(new GridLayout(1, 1));
-		panelContainer.add(new StartPanel(this), BorderLayout.CENTER);
-		frame.pack();
+		panelContainer.add(new StartPanel(this));
 		panelContainer.revalidate();
+		frame.add(panelContainer);
+		frame.pack();
+		frame.repaint();
+		
 	}
 
 	public void startGame() {
@@ -97,7 +104,7 @@ public class Main {
 
 			int size = (int) Math.sqrt(selectedNumberOfPanels);
 
-			bufferedImages = new ImageSplitter().splitImage(selectedNumberOfPanels, selectedImage, false);
+			bufferedImages = imageSplitter.splitImage(selectedNumberOfPanels, selectedImage, false);
 
 			panelContainer.removeAll();
 			panelContainer.setPreferredSize(new Dimension(1200, 800));
@@ -137,15 +144,28 @@ public class Main {
 
 	public void showResults() {
 		if (wins + losses == selectedNumberOfPanels) {
-			String saved = "Your results have been saved.";
+			String saved = "Your results have been saved. ";
+			String compare = "";
 
 			if (losses > 0) {
 				saved = "No results were saved because you failed to answer " + losses
-						+ " game piece(s).  Please try again";
+						+ " game piece(s).  Please try again. ";
+			}
+			
+			Result r = resultHandler.getAllTimeBest(selectedNumberOfPanels, selectedNumber, isAddSubtract);
+			if(r!=null)
+			{
+				long diff = getAverageElapsedTime() - r.averageTime;
+				
+				if(diff <= 0){
+					compare = "Congrats! You beat the high score of " + r.averageTime + " by " + diff + "ms. ";
+				} else {
+					compare = "You were " + diff + "ms slower than the high score.  Try again. ";
+				}
 			}
 
-			JLabel label = new JLabel("Total answered correctly: " + wins + "; Average time to finish: "
-					+ getAverageElapsedTime() + "ms" + "; Your results have been saved.");
+			JLabel label = new JLabel("Total answered correctly: " + wins + ". Average time to finish: "
+					+ getAverageElapsedTime() + "ms" + ". " + saved + compare);
 			resultPanel.removeAll();
 			resultPanel.add(label);
 
@@ -159,7 +179,7 @@ public class Main {
 			});
 
 			JButton returnToStartButton = new JButton("Return to start screen");
-			playAgainButton.addActionListener(new ActionListener() {
+			returnToStartButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					resultPanel.removeAll();

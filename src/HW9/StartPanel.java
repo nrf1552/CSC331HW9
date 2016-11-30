@@ -166,10 +166,9 @@ public class StartPanel extends JPanel {
 
 	private JPanel playPanel() {
 		panel = new JPanel(new GridLayout(1,2));
-		
-		
+				
 		JTable table = new JTable(main.resultHandler.getAllResults(), main.resultHandler.getHeaders());
-		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+		panel.add(new JScrollPane(table));
 		
 		startButton = new JButton("Start");
 		startButton.setEnabled(false);
@@ -180,7 +179,7 @@ public class StartPanel extends JPanel {
 			}
 		});
 		
-		panel.add(startButton,BorderLayout.PAGE_END);
+		panel.add(startButton);
 		
 		//panel.add(startButton, BorderLayout.PAGE_END);
 
