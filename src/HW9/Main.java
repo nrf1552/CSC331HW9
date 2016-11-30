@@ -25,6 +25,7 @@ public class Main {
 	public Integer selectedNumberOfPanels;
 	public Boolean isAddSubtract;
 	public String selectedImage;
+	public Sound sounds;
 
 	private JFrame frame;
 	private BufferedImage[] images;
@@ -34,27 +35,14 @@ public class Main {
 	private int losses;
 	private JPanel resultPanel;
 	
-	//AudioClip cheerSound;
-	//AudioClip booSound;
-
 	public Main() {
-		URL cheerUrl = null;
-		URL booUrl = null;
-		try {
-			cheerUrl = new URL("http://www.wavsource.com/snds_2016-11-20_5768273412148964/tv/simpsons/bart/big_deal.wav");
-			booUrl = new URL("file://boo.wav");
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//cheerSound = Applet.newAudioClip(cheerUrl);
-		//booSound = Applet.newAudioClip(booUrl);
+		// Initialize variables
+		sounds = new Sound();
 		
-		//cheerSound.play();
-		
-		
-		
-		
+		// Set defaults
+		selectedNumber = 6;
+		selectedNumberOfPanels = 4;
+		isAddSubtract = true;
 		
 		// Instantiate JFrame
 		frame = new JFrame("Homework 9");

@@ -127,9 +127,10 @@ public class MathPanel extends JPanel {
 
 			imageComponent.showImageLayer();
 			imageComponent.viewer.recordWin(getElapsedTime());
-
+			imageComponent.viewer.sounds.playCorrectSound();
 			// Once the attempts variable is equal to 2, show the correct answer
 		} else {
+			imageComponent.viewer.sounds.playIncorrectSound();
 			if (attempts == 2) {
 				fieldAnswer.setText(Integer.toString(mathAnswer));
 				fieldAnswer.setEditable(false);
