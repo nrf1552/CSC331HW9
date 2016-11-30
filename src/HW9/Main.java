@@ -16,28 +16,33 @@ import javax.swing.*;
 import javax.sound.sampled.*;
 
 public class Main {
-
-	public String resultsFilePath;
+	public ResultHandler resultHander;
 	public String highScoreTime;
 	public String highScoreUser;
+	public String user;
 		
-	public Integer selectedNumber;
-	public Integer selectedNumberOfPanels;
-	public Boolean isAddSubtract;
+	public Integer selectedNumber = 0;
+	public Integer selectedNumberOfPanels = 4;
+	public Boolean isAddSubtract = true;
 	public String selectedImage;
 	public Sound sounds;
 
 	private JFrame frame;
-	private BufferedImage[] images;
+	private BufferedImage[] bufferedImages;
 	private JPanel panelContainer;
 	private List<Long> times;
 	private int wins;
 	private int losses;
 	private JPanel resultPanel;
 	
+	public String[] images = { "Spring.jpg", "Summer.jpg", "Fall.jpg", "Winter.jpg" };
+	public int[] numberOfProblems = { 4, 9, 16 };
+	public String[] calculationType = { "Add/Subtract", "Multiply/Divide" };
+	
 	public Main() {
 		// Initialize variables
 		sounds = new Sound();
+		resultHander = new ResultHandler();
 		
 		// Set defaults
 		selectedNumber = 6;
@@ -68,7 +73,16 @@ public class Main {
 		frame.pack();
 
 		// Show image components
-		displayImageComponents();
+		displayStartScreen();
+	}
+	
+	public void displayStartScreen(){
+		panelContainer.removeAll();
+		//panelContainer.setPreferredSize(getImageDimension(selectedImage));
+		panelContainer.setLayout(new GridLayout(3,1));
+		panelContainer.add(new StartPanel(this));
+		frame.pack();
+		panelContainer.revalidate();
 	}
 
 	public void displayImageComponents() {
@@ -83,12 +97,12 @@ public class Main {
 
 			int size = (int) Math.sqrt(selectedNumberOfPanels);
 
-			images = new ImageSplitter().splitImage(selectedNumberOfPanels, selectedImage, false);
+			bufferedImages = new ImageSplitter().splitImage(selectedNumberOfPanels, selectedImage, false);
 			panelContainer.removeAll();
-			panelContainer.setPreferredSize(getImageDimension(selectedImage));
+			panelContainer.setPreferredSize(new Dimension(1200,800));
 			panelContainer.setLayout(new GridLayout(size, size));
 			
-			for (BufferedImage img : images) {
+			for (BufferedImage img : bufferedImages) {
 				panelContainer.add(new ImageComponent(img, this));
 			}
 
