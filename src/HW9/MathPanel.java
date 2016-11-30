@@ -119,7 +119,7 @@ public class MathPanel extends JPanel {
 	}
 
 	private long getElapsedTime() {
-		return solveTime;
+		return stopTime - startTime;
 	}
 
 	private void validateAnswer() {
@@ -132,11 +132,10 @@ public class MathPanel extends JPanel {
 		// the solveTime variable, and show the image underneath
 		if (Integer.parseInt(fieldAnswer.getText())==mathAnswer) {
 			stopTime = System.nanoTime();
-			solveTime = stopTime - startTime;
+			imageComponent.playCorrectSound();
 
 			imageComponent.showImageLayer();
 			imageComponent.viewer.recordWin(getElapsedTime());
-			imageComponent.playCorrectSound();
 			// Once the attempts variable is equal to 2, show the correct answer
 		} else {
 			imageComponent.playIncorrectSound();
