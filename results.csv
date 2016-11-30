@@ -1,5 +1,14 @@
-name,problems,group,addSubtract,averageTime
+Name,Number of Problems,Number Group,Is Add or Subtract, Average Time in Milliseconds
 Nick,12,0,true,10000
 Nick,12,0,true,100
 Bob,12,0,true,60000
 Mary,12,0,true,10
+Nick,4,6,true,3031
+Nick,4,6,true,1924
+Nick,4,6,true,1729
+Nick,4,6,true,1704
+Nick,4,6,true,1265
+Nick,4,0,true,1681
+Nick,4,0,true,1125
+Nick,4,0,true,1281
+Nick,4,6,false,3859

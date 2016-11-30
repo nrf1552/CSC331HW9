@@ -55,6 +55,7 @@ public class ImageComponent extends JPanel {
 
 	public void showImageLayer() {
 		cardLayout.show(this, IMAGE);
+		viewer.showRandomPanel();
 	}
 	
 	public void playCorrectSound(){

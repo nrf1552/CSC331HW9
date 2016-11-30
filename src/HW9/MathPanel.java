@@ -35,8 +35,6 @@ public class MathPanel extends JPanel {
 	private JTextField fieldAnswer;
 	private int userNumber;
 	private int randomNum;
-
-	private long solveTime;
 	private long startTime;
 	private long stopTime;
 
@@ -135,10 +133,24 @@ public class MathPanel extends JPanel {
 
 		// If user's answer is correct, record the time, store it in
 		// the solveTime variable, and show the image underneath
-		if (Integer.parseInt(fieldAnswer.getText()) == mathAnswer) {
+		
+		boolean isNumeric = true;
+		try {
+			Integer.parseInt(fieldAnswer.getText());
+		}
+		catch (Exception e){
+			isNumeric = false;
+		}
+		
+		//for demo purposes, the tilde will pass
+		if(fieldAnswer.getText().equalsIgnoreCase("~")){
 			stopTime = System.nanoTime();
 			imageComponent.playCorrectSound();
-
+			imageComponent.showImageLayer();
+			imageComponent.viewer.recordWin(getElapsedTime());
+		} else if (isNumeric && Integer.parseInt(fieldAnswer.getText()) == mathAnswer) {
+			stopTime = System.nanoTime();
+			imageComponent.playCorrectSound();
 			imageComponent.showImageLayer();
 			imageComponent.viewer.recordWin(getElapsedTime());
 			// Once the attempts variable is equal to 2, show the correct answer
@@ -173,6 +185,9 @@ public class MathPanel extends JPanel {
 				mathProblem = userNumber + " * " + randomNum;
 				mathAnswer = userNumber * randomNum;
 			} else {
+				if (randomNum==0){
+					randomNum += 1;
+				}
 				mathProblem = userNumber + " / " + randomNum;
 				mathAnswer = userNumber / randomNum;
 			}

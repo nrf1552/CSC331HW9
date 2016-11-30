@@ -12,22 +12,22 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 public class Main {
-	public ResultHandler resultHander;
+	public ResultHandler resultHandler;
 	public Sound sounds;
 
-	//game data
+	// game data
 	public String[] images = { "Spring.jpg", "Summer.jpg", "Fall.jpg", "Winter.jpg" };
 	public int[] numberOfProblems = { 4, 9, 16 };
 	public String[] calculationType = { "Add/Subtract", "Multiply/Divide" };
-	
-	//defaults
+
+	// defaults
 	public String selectedImage = images[0];
 	public String user = "Nick";
 	public Integer selectedNumber = 0;
 	public Integer selectedNumberOfPanels = numberOfProblems[0];
 	public Boolean isAddSubtract = true;
 
-	//class variables
+	// class variables
 	private JFrame frame;
 	private BufferedImage[] bufferedImages;
 	private JPanel panelContainer;
@@ -35,12 +35,12 @@ public class Main {
 	private int wins;
 	private int losses;
 	private JPanel resultPanel;
-
+	private List<ImageComponent> imageComponents;
 
 	public Main() {
 		// Initialize variables
 		sounds = new Sound();
-		resultHander = new ResultHandler();
+		resultHandler = new ResultHandler();
 
 		// Set defaults
 		selectedNumber = 6;
@@ -76,9 +76,8 @@ public class Main {
 
 	public void displayStartScreen() {
 		panelContainer.removeAll();
-		// panelContainer.setPreferredSize(getImageDimension(selectedImage));
-		panelContainer.setLayout(new GridLayout(3, 1));
-		panelContainer.add(new StartPanel(this));
+		panelContainer.setLayout(new GridLayout(1, 1));
+		panelContainer.add(new StartPanel(this), BorderLayout.CENTER);
 		frame.pack();
 		panelContainer.revalidate();
 	}
@@ -89,6 +88,7 @@ public class Main {
 				&& selectedImage != null) {
 
 			// re-initialize game variable
+			imageComponents = new ArrayList<ImageComponent>();
 			times = new ArrayList<Long>();
 			wins = 0;
 			losses = 0;
@@ -96,16 +96,29 @@ public class Main {
 			int size = (int) Math.sqrt(selectedNumberOfPanels);
 
 			bufferedImages = new ImageSplitter().splitImage(selectedNumberOfPanels, selectedImage, false);
+
 			panelContainer.removeAll();
 			panelContainer.setPreferredSize(new Dimension(1200, 800));
 			panelContainer.setLayout(new GridLayout(size, size));
 
 			for (BufferedImage img : bufferedImages) {
-				panelContainer.add(new ImageComponent(img, this));
+				ImageComponent ic = new ImageComponent(img, this);
+				panelContainer.add(ic);
+				imageComponents.add(ic);
 			}
 
 			frame.pack();
 			panelContainer.revalidate();
+
+			showRandomPanel();
+		}
+	}
+
+	public void showRandomPanel() {
+		if (imageComponents.size() > 0) {
+			int random = new Random().nextInt(imageComponents.size());
+			imageComponents.get(random).showMathLayer();
+			imageComponents.remove(random);
 		}
 	}
 
@@ -123,23 +136,17 @@ public class Main {
 	public void showResults() {
 		if (wins + losses == selectedNumberOfPanels) {
 			String saved = "Your results have been saved.";
-			
+
 			if (losses > 0) {
-				saved = "No results were saved because you failed to answer " + losses + " game piece(s).  Please try again";
-			} else {
-				resultHander.saveResult(
-						user, 
-						selectedNumberOfPanels, 
-						selectedNumber, 
-						isAddSubtract,
-						getAverageElapsedTime());
+				saved = "No results were saved because you failed to answer " + losses
+						+ " game piece(s).  Please try again";
 			}
-			JLabel label = new JLabel(
-					"Total answered correctly: " + wins + "; Average time to finish: "
+
+			JLabel label = new JLabel("Total answered correctly: " + wins + "; Average time to finish: "
 					+ getAverageElapsedTime() + "ms" + "; Your results have been saved.");
 			resultPanel.removeAll();
 			resultPanel.add(label);
-			
+
 			JButton playAgainButton = new JButton("Play again");
 			playAgainButton.addActionListener(new ActionListener() {
 				@Override
@@ -148,7 +155,7 @@ public class Main {
 					startGame();
 				}
 			});
-			
+
 			JButton returnToStartButton = new JButton("Return to start screen");
 			playAgainButton.addActionListener(new ActionListener() {
 				@Override
@@ -157,10 +164,15 @@ public class Main {
 					displayStartScreen();
 				}
 			});
-			
+
 			resultPanel.add(playAgainButton);
 			resultPanel.add(returnToStartButton);
 			frame.repaint();
+
+			if (losses == 0) {
+				resultHandler.saveResult(user, selectedNumberOfPanels, selectedNumber, isAddSubtract,
+						getAverageElapsedTime());
+			}
 		}
 	}
 
@@ -175,7 +187,7 @@ public class Main {
 
 		return TimeUnit.MILLISECONDS.convert(avg, TimeUnit.NANOSECONDS);
 	}
-	
+
 	public static void main(String[] args) {
 		new Main();
 	}

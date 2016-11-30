@@ -1,5 +1,7 @@
 package HW9;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import HW9.ResultHandler.Result;
 
 public class StartPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -23,16 +29,18 @@ public class StartPanel extends JPanel {
 	ButtonGroup imgGroup;
 	JRadioButton radioButton;
 	JComboBox<String> existingUserComboBox;
-	final String defaultText = "<Enter name here or select existing from dropdown>";
 
 	public StartPanel(Main main) {
 		this.main = main;
+		setPreferredSize(new Dimension(800,1200));
 
 		setLayout(new GridLayout(3, 1));
 
 		add(userPanel());
 		add(optionsPanel());
-		add(playPanel());	
+		add(playPanel());
+				
+		enableButtonIfReady();
 	}
 
 	private JPanel userPanel() {
@@ -40,18 +48,16 @@ public class StartPanel extends JPanel {
 		userPanel.setBorder(BorderFactory.createTitledBorder("Select previous user or enter name"));
 		existingUserComboBox = new JComboBox<>();
 		existingUserComboBox.setEditable(true);
-		existingUserComboBox.addItem(defaultText);
-		for (String user : main.resultHander.getUsers()) {
+		for (String user : main.resultHandler.getUsers()) {
 			existingUserComboBox.addItem(user);
 		}
+		existingUserComboBox.setSelectedItem(main.user);
 
 		existingUserComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String name = (String) existingUserComboBox.getSelectedItem();
-				if (name != defaultText) {
-					main.user = name.replace(",", "");
-				}
+				main.user = name.replace(",", "");
 				enableButtonIfReady();
 			}
 		});
@@ -74,7 +80,7 @@ public class StartPanel extends JPanel {
 		panel.setLayout(new GridLayout(main.calculationType.length + 1, 1));
 		panel.setBorder(BorderFactory.createTitledBorder("Select a number and calculation type"));
 
-		// select 0-12 from dropdown
+		// select 0-12 from drop down
 		JComboBox<String> numberGroupComboBox = new JComboBox<String>();
 		for (int i = 0; i <= 12; i++) {
 			final int index = i;
@@ -158,8 +164,13 @@ public class StartPanel extends JPanel {
 		return panel;
 	}
 
-	private JPanel playPanel(){
-		panel = new JPanel();
+	private JPanel playPanel() {
+		panel = new JPanel(new GridLayout(1,2));
+		
+		
+		JTable table = new JTable(main.resultHandler.getAllResults(), main.resultHandler.getHeaders());
+		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+		
 		startButton = new JButton("Start");
 		startButton.setEnabled(false);
 		startButton.addActionListener(new ActionListener() {
@@ -169,14 +180,19 @@ public class StartPanel extends JPanel {
 			}
 		});
 		
-		panel.add(startButton);
+		panel.add(startButton,BorderLayout.PAGE_END);
+		
+		//panel.add(startButton, BorderLayout.PAGE_END);
+
+				
 		return panel;
 	}
-	
-	private void enableButtonIfReady(){
-		String user = (String)existingUserComboBox.getSelectedItem();
-		
-		if(numGroup.getSelection()==null || calcGroup.getSelection()==null || imgGroup.getSelection()==null || user.isEmpty() || user.equalsIgnoreCase(defaultText)){
+
+	private void enableButtonIfReady() {
+		String user = (String) existingUserComboBox.getSelectedItem();
+
+		if (numGroup.getSelection() == null || calcGroup.getSelection() == null || imgGroup.getSelection() == null
+				|| user.isEmpty()) {
 			startButton.setEnabled(false);
 		} else {
 			startButton.setEnabled(true);
