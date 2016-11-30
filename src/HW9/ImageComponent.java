@@ -48,6 +48,7 @@ public class ImageComponent extends JPanel {
 	}
 
 	public void showMathLayer() {
+		mathPanel.startTimer();
 		cardLayout.show(this, MATH);
 		mathPanel.setFocusInTextField();
 	}

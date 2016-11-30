@@ -116,10 +116,6 @@ public class Main {
 			frame.repaint();
 		}
 	}
-
-	public void increaseGameLevel()	{
-		
-	}
 	
 	public void writeRunDataToFile(){
 		
