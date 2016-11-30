@@ -10,6 +10,7 @@ import javax.swing.JPanel;
  * 
  * @author Nick Fields
  *
+ * Base image of game piece
  */
 
 public class ImagePanel extends JPanel {

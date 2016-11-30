@@ -1,6 +1,5 @@
 package HW9;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,7 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import HW9.ResultHandler.Result;
-
+/**
+ * @author nickf
+ */
 public class StartPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 

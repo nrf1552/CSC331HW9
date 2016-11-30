@@ -2,9 +2,12 @@ package HW9;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import javax.swing.*;
-
+/**
+ * @author nickf
+ * 
+ * Basic menu
+ */
 public class ViewerMenu extends JMenuBar{
 
 	static final long serialVersionUID = 1L;

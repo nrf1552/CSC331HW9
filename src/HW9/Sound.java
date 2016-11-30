@@ -2,7 +2,11 @@ package HW9;
 
 import java.io.File;
 import javax.sound.sampled.*;
-
+/**
+ * @author nickf
+ * 
+ * loads and plays sounds
+ */
 public class Sound {
 	boolean playing = false;
 	Clip cheerClip;

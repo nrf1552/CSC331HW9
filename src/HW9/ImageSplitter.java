@@ -1,11 +1,11 @@
 package HW9;
-
-import java.awt.Dimension;
+/**
+ * Author: Nick Fields
+ */
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 

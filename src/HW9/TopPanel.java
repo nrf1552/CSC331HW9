@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 /**
  * 
  * @author Nick Fields
+ * 
+ * Top panel of game piece
  *
  */
 public class TopPanel extends JPanel {

@@ -1,5 +1,9 @@
 package HW9;
-
+/**
+ * @author nickf
+ * 
+ * image interface for each game piece
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;

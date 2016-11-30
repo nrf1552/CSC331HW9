@@ -3,9 +3,12 @@ package HW9;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-
+/**
+ * @author nickf
+ * 
+ * CSV writer/result handler
+ */
 public class ResultHandler {
 	String csv;
 	String line;

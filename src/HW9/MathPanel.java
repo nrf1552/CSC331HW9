@@ -1,5 +1,9 @@
 package HW9;
-
+/**
+ * @author nickf
+ * 
+ * Math portion of game piece
+ */
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;

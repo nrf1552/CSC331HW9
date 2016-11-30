@@ -1,5 +1,7 @@
 package HW9;
-
+/**
+ * Author: Nick Fields
+ */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -12,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 import HW9.ResultHandler.Result;
-
+/**
+ * @author nickf
+ */
 public class Main {
 	public ResultHandler resultHandler;
 	public Sound sounds;
