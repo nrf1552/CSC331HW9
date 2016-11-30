@@ -62,6 +62,7 @@ public class Main {
 		frame.setJMenuBar(new ViewerMenu(this).get());
 
 		// Add container for all image components
+		
 		panelContainer = new JPanel();
 		panelContainer.setPreferredSize(new Dimension(1200, 800));
 		frame.add(panelContainer, BorderLayout.CENTER);
@@ -76,6 +77,7 @@ public class Main {
 
 	public void displayStartScreen() {
 		panelContainer.removeAll();
+		panelContainer.setPreferredSize(new Dimension(1200, 800));
 		panelContainer.setLayout(new GridLayout(1, 1));
 		panelContainer.add(new StartPanel(this), BorderLayout.CENTER);
 		frame.pack();
